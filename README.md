@@ -1,9 +1,9 @@
 # Java-DSA-Questions
 <p>
   <ol>
-    <li>Basics of programming(Java)</li>
+    <li><a href="https://github.com/J-Srinivasalu/Java-DSA-Questions/tree/main/Basics%20of%20Programming(Java)">Basics of programming(Java)</a></li>
     <ul>
-      <li><a href="https://github.com/J-Srinivasalu/Java-DSA-Questions/tree/main/Basics%20of%20Programming(Java)">input/output</a></li>
+      <li>input/output</li>
       <li>conditional statements</li>
       <li>Loops</li>
     </ul>
