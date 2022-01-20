@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class FibonacciSeries {
     public static void main(String[] args) {
-        //7. Fibonacci series
+        //Fibonacci series
         Scanner in = new Scanner(System.in);
         int n = in.nextInt();
 

@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class ArmstrongNumber{
     public static void main(String[] args) {
-        //9. Armstrong numbers between two numbers
+        //Armstrong numbers between two numbers
         Scanner in = new Scanner(System.in);
         int a = in.nextInt();
         int b = in.nextInt();
