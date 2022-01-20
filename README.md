@@ -1,4 +1,4 @@
-# Java-DSA-Questions
+# Java DSA
 <p>
   <ol>
     <li class="collapsible"><a href="https://github.com/J-Srinivasalu/Java-DSA-Questions/tree/main/Basics%20of%20Programming(Java)">Basics of programming(Java)</a></li>
