@@ -7,7 +7,7 @@
       <li>conditional statements</li>
       <li>Loops</li>
     </ul>
-    <li>Functions</li>
+    <li><a href="https://github.com/J-Srinivasalu/Java-DSA-Problems/tree/main/Functions">Functions</a></li>
     <ul>
       <li>Scoping</li>
       <li>Variable Length Arguments</li>
