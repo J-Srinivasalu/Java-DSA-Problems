@@ -49,7 +49,7 @@
     - Vector Class
     - Lambda Expression 
     - Enums
-- [Linked List](Linked%20List)
+- [Linked List](LinkedList)
     - Singly + Doubly + Circular LinkedList
     - Fast and slow pointer
     - Cycle Detection
