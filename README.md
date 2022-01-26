@@ -25,7 +25,6 @@
         - Sudoku Solver
         - Maze problems
 - Object Oriented Programming
-
     - Classes & its instances
     - this keyword in Java
     - Properties
@@ -51,14 +50,13 @@
     - Lambda Expression 
     - Enums
 - Linked List
-
     - Singly + Doubly + Circular LinkedList
     - Fast and slow pointer
     - Cycle Detection
     - Reversal of LinkedList
     - Linked List + Recursion
 - Stacks & Queues
-
+    - Introduction
     - Push efficient
     - Pop efficient
     - Circular Queue
