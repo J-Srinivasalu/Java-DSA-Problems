@@ -1,21 +1,21 @@
 # Java DSA
 
-- Basic Java Program  
-    - Input and Output in Java
+- [Basic Java Program](Basics%20of%20Programming(Java))  
+    - [Input and Output in Java](Basics%20of%20Programming(Java)/BasicInputOutput.java)
     - Conditionals & Loops in Java
-    - Data-types
-- Functions
-    - Scoping in Java
+    - [Data-types](Basics%20of%20Programming(Java)/DataTypes.java)
+- [Functions](Functions)
+    - [Scoping in Java](Functions/Function.java)
     - Shadowing
     - Variable Length Arguments
     - Overloading
-- Arrays
-    - Searching
-    - Sorting
-- Pattern questions
+- [Arrays](Arrays)
+    - [Searching](Arrays/Searching)
+    - [Sorting](Arrays/Sorting)
+- [Pattern questions](Pattern/Pattern.java)
 - Strings
 - Maths for DSA
-- Recursion
+- [Recursion](Recursion)
     - Sorting
         - Merge Sort
         - Quick Sort
@@ -49,7 +49,7 @@
     - Vector Class
     - Lambda Expression 
     - Enums
-- Linked List
+- [Linked List](Linked%20List)
     - Singly + Doubly + Circular LinkedList
     - Fast and slow pointer
     - Cycle Detection
