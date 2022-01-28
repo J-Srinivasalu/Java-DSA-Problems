@@ -1,4 +1,10 @@
+import Testing.LL;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class LinkedListEasy {
+    private static ListNode head = null;
     private static class ListNode {
         int val;
         ListNode next;
@@ -60,6 +66,7 @@ public class LinkedListEasy {
         return prev;
     }
 
+
     //    Middle of the Linked List leetcode
     public ListNode middleNode(ListNode head) {
         ListNode fast = head;
@@ -95,11 +102,127 @@ public class LinkedListEasy {
         node.val = node.next.val;
         node.next = node.next.next;
     }
-//    Palindrome Linked List leetcode Snapdeal
-//    Intersection of Two Linked Lists leetcode
-//    Linked List Cycle leetcode Samsung
 
-//    Remove Duplicates from Sorted Listleetcode
-//    Find All Numbers Disappeared in an Array leetcode
-//    Remove Linked List Elements leetcode
+    //    Palindrome Linked List leetcode Snapdeal
+    public boolean isPalindrome(ListNode head) {
+        if (head == null || head.next == null) return true;
+        ListNode mid = middleNodePalindrome(head);
+        mid = reverseList(mid);
+        while (mid != null && head != null) {
+            if (mid.val == head.val) {
+                mid = mid.next;
+                head = head.next;
+            } else return false;
+        }
+        return true;
+    }
+
+    public ListNode middleNodePalindrome(ListNode head) {
+        ListNode fast = head;
+        ListNode slow = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        if (fast != null) { // odd nodes: let right half smaller
+            slow = slow.next;
+        }
+        return slow;
+    }
+
+    //    Intersection of Two Linked Lists leetcode
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+
+        if (headA == null || headB == null) return null;
+        ListNode list1 = headA;
+        ListNode list2 = headB;
+
+        while (list1 != list2) {
+            list1 = list1 == null ? headB : list1.next;
+            list2 = list2 == null ? headA : list2.next;
+        }
+        return list1;
+    }
+
+    //    Linked List Cycle leetcode Samsung
+    public boolean hasCycle(ListNode head) {
+        if (head == null) return false;
+        ListNode slow = head.next;
+        if (slow == null) return false;
+        ListNode fast = head.next.next;
+        while (fast != null && fast.next != null) {
+            if (fast == slow) return true;
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return false;
+    }
+
+    //    Remove Duplicates from Sorted Listleetcode
+    public ListNode deleteDuplicates(ListNode head) {
+        ListNode first = head;
+        if (first == null || head.next == null) return head;
+        ListNode second = head.next;
+        while (second != null) {
+            if (first.val == second.val) {
+                first.next = second.next;
+                second = second.next;
+            } else {
+                first = first.next;
+                second = second.next;
+            }
+        }
+        return head;
+    }
+
+    //    Find All Numbers Disappeared in an Array leetcode
+    public List<Integer> findDisappearedNumbers(int[] nums) {
+        List<Integer> ans = new ArrayList<>();
+        cyclicSort(nums);
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != i + 1) {
+                ans.add(i + 1);
+            }
+        }
+        return ans;
+    }
+
+    public void cyclicSort(int[] nums) {
+        int i = 0;
+        while (i < nums.length) {
+            if (nums[i] != nums[nums[i] - 1]) {
+                swap(nums, i, nums[i] - 1);
+            } else {
+                i++;
+            }
+        }
+    }
+
+    public void swap(int[] nums, int first, int second) {
+        int temp = nums[first];
+        nums[first] = nums[second];
+        nums[second] = temp;
+    }
+
+    //    Remove Linked List Elements leetcode
+    public ListNode removeElements(ListNode head, int val) {
+        ListNode temp = head;
+
+        while (temp != null) {
+            if (head != null && head.val == val) {
+                head = head.next;
+                continue;
+            }
+            if (temp.next != null) {
+                if (temp.next.val == val) {
+                    temp.next = temp.next.next;
+                } else {
+                    temp = temp.next;
+                }
+            } else {
+                break;
+            }
+        }
+        return head;
+    }
 }
