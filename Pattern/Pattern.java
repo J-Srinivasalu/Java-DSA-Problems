@@ -1,6 +1,6 @@
 public class Pattern {
     public static void main(String[] args) {
-        pattern14(5);
+        pattern17(5);
 
     }
 
@@ -255,14 +255,39 @@ public class Pattern {
 //                    * *
 //                     *
 //
+
+    public static void pattern15(int n){
+        for(int i=n;i>0;i--){
+            for(int j=0;j<n;j++){
+                if(j==i-1) System.out.print("*");
+                else System.out.print(" ");
+            }
+            for(int j=0;j<n-i;j++){
+                if(j==n-i-1) System.out.print("*");
+                else System.out.print(" ");
+            }
+            System.out.println();
+        }
+        for(int i=n;i>1;i--){
+            for(int j=0;j<n-1;j++){
+                if(j==n-i) System.out.print(" *");
+                else System.out.print(" ");
+            }
+            for(int j=2;j<n;j++){
+                if(j==i-1) System.out.print("*");
+                else System.out.print(" ");
+            }
+            System.out.println();
+        }
+    }
 //
 //            16.           1
 //                        1   1
 //                      1   2   1
 //                    1   3   3   1
 //                  1   4   6   4   1
-//
-//
+
+
 //            17.      1
 //                    212
 //                   32123
@@ -270,18 +295,33 @@ public class Pattern {
 //                   32123
 //                    212
 //                     1
-//
-//
+
+    public static void pattern17(int n){
+        for (int i = 1; i < 2*n; i++) {
+            for (int space = 0; space < (i>n?i-n:n-i); space++) {
+                System.out.print(" ");
+            }
+            int condition = i > n ? 2 * n - i : i;
+            for (int j = condition; j >0 ; j--) {
+                System.out.print(j);
+            }
+            for(int j = 2; j<= condition; j++){
+                System.out.print(j);
+            }
+            System.out.println();
+        }
+    }
+
 //            18.   **********
-//            ****  ****
-//            ***    ***
-//            **      **
-//            *        *
-//            *        *
-//            **      **
-//            ***    ***
-//            ****  ****
-//            **********
+//                  ****  ****
+//                  ***    ***
+//                  **      **
+//                  *        *
+//                  *        *
+//                  **      **
+//                  ***    ***
+//                  ****  ****
+//                  **********
 //
 //
 //            19.    *        *
