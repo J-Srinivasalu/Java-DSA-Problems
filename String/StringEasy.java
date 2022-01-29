@@ -1,3 +1,5 @@
+package CompletedPhase1;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -240,6 +242,7 @@ public class StringEasy {
     }
 
     //    Excel Sheet Column Title
+    //copied
     public String convertToTitle(int n) {
         StringBuilder result = new StringBuilder();
         while (n > 0) {
@@ -265,15 +268,245 @@ public class StringEasy {
             }
         }
     }
-//    Long Pressed Name
-//    Valid Palindrome
-//    Valid Palindrome II
-//    Longest Common Prefix
-//    Maximum Repeating Substring
-//    Check if Binary String Has at Most One Segment of Ones
-//    Merge Strings Alternately
-//    Reverse Prefix of Word
-//    Roman to Integer
-//    Valid Parentheses
-//    Length of last word
+
+    //    Long Pressed Name
+    public boolean isLongPressedName(String name, String typed) {
+
+        int i = 1, j = 1;
+
+        //Checking the first character
+        if (name.charAt(0) != typed.charAt(0))
+            return false;
+
+
+        //Traversing the Strings using two pointer
+        while (i < name.length() && j < typed.length()) {
+            if (name.charAt(i) == typed.charAt(j)) {
+                i++;
+                j++;
+            } else {
+                if (typed.charAt(j) == typed.charAt(j - 1))
+                    j++;
+
+                else
+                    return false;
+            }
+        }
+
+
+        //Case 1 : i and j both reached end of the String
+        if (i == name.length() && j == typed.length())
+            return true;
+
+            //Case 2 : First word is not yet complete traversed. The second word is complete
+        else if (i != name.length() && j == typed.length())
+            return false;
+
+            //Case 3: First word complete. The second word still has some characters left.
+        else {
+            while (j != typed.length()) {
+                if (typed.charAt(j) == typed.charAt(j - 1))
+                    j++;
+
+                else
+                    return false;
+            }
+        }
+        return true;
+    }
+
+    //    Valid Palindrome
+    public boolean isPalindrome(String s) {
+        s = s.toLowerCase();
+        StringBuilder str = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            if (Character.isLetterOrDigit(s.charAt(i))) {
+                str.append(s.charAt(i));
+            }
+        }
+        return str.toString().equals(str.reverse().toString());
+    }
+
+    //    Valid Palindrome II
+    public boolean validPalindrome(String s) {
+        char[] sc = s.toCharArray();
+        int i = 0, j = s.length() - 1;
+        while (i < j) {
+            if (sc[i] != sc[j]) {
+                return helper(sc, i + 1, j) || helper(sc, i, j - 1);
+            }
+            i++;
+            j--;
+        }
+        return true;
+    }
+
+    boolean helper(char[] sc, int i, int j) {
+        while (i < j) {
+            if (sc[i] != sc[j]) return false;
+            i++;
+            j--;
+        }
+        return true;
+    }
+
+    public boolean validPalindrome2(String s) {
+        return isPalindrome(s, 0, s.length() - 1, false);
+    }
+
+    public boolean isPalindrome(final String s, int leftIndex, int rightIndex, final boolean isCharacterDeleted) {
+
+        while (leftIndex < rightIndex) {
+
+            if (s.charAt(leftIndex) != s.charAt(rightIndex)) {
+
+                if (isCharacterDeleted) {
+                    return false;
+                }
+
+                // isPalindrome(s, leftIndex + 1, rightIndex, true) for cases like "ececabbacec"
+                // isPalindrome(s, leftIndex, rightIndex - 1, true) for cases like "abccbab"
+                return isPalindrome(s, leftIndex + 1, rightIndex, true) || isPalindrome(s, leftIndex, rightIndex - 1, true);
+            }
+
+            ++leftIndex;
+            --rightIndex;
+
+        }
+
+        return true;
+    }
+
+    //    Longest Common Prefix
+    public String longestCommonPrefix(String[] strs) {
+        String prefix = strs[0];
+        for (int index = 1; index < strs.length; index++) {
+            while (strs[index].indexOf(prefix) != 0) {
+                prefix = prefix.substring(0, prefix.length() - 1);
+            }
+        }
+        return prefix;
+    }
+
+    //    Maximum Repeating Substring
+    public int maxRepeating(String sequence, String word) {
+        int count = 0;
+        StringBuilder result = new StringBuilder();
+        while (sequence.contains(result.append(word))) count++;
+        return count;
+    }
+
+    //    Check if Binary String Has at Most One Segment of Ones
+    public boolean checkOnesSegmentOneLiner(String s) {
+        return !s.contains("01");
+    }
+
+    //using xor operator
+    public boolean checkOnesSegment(String s) {
+
+        int count = 0;
+        char ch = '1';
+
+        for (char c : s.toCharArray()) {
+            if ((c ^ ch) == 1) {
+                ++count;
+                ch = c;
+                if (count > 1) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    //    Merge Strings Alternately
+    public String mergeAlternately(String word1, String word2) {
+        int i = 0;
+        int j = 0;
+        StringBuilder ans = new StringBuilder();
+        while (i < word1.length() || j < word2.length()) {
+            if (i < word1.length()) {
+                ans.append(word1.charAt(i++));
+            }
+            if (j < word2.length()) {
+                ans.append(word2.charAt(j++));
+            }
+        }
+        return ans.toString();
+    }
+
+    //    Reverse Prefix of Word
+    public String reversePrefix(String word, char ch) {
+        int i = 0;
+        for (; i < word.length(); i++) {
+            if (word.charAt(i) == ch) {
+                break;
+            }
+        }
+        if (i == word.length()) return word;
+        StringBuilder ans = new StringBuilder();
+
+        for (int j = i; j >= 0; j--) {
+            ans.append(word.charAt(j));
+        }
+        if (i != word.length() - 1) {
+            for (int j = i + 1; j < word.length(); j++) {
+                ans.append(word.charAt(j));
+            }
+        }
+        return ans.toString();
+
+    }
+
+    //    Roman to Integer
+    public int romanToInt(String s) {
+        int total = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (i != s.length() - 1 && getValue(s.charAt(i)) < getValue(s.charAt(i + 1))) {
+                total -= getValue(s.charAt(i));
+            } else {
+                total += getValue(s.charAt(i));
+            }
+        }
+        return total;
+    }
+
+    public int getValue(Character ch) {
+
+        switch (ch) {
+            case 'I':
+                return 1;
+            case 'V':
+                return 5;
+            case 'X':
+                return 10;
+            case 'L':
+                return 50;
+            case 'C':
+                return 100;
+            case 'D':
+                return 500;
+            case 'M':
+                return 1000;
+            default:
+                return 0;
+        }
+    }
+
+
+    //    Length of last word
+    public int lengthOfLastWord(String s) {
+        int len = 0;
+        for (int i = s.length() - 1; i >= 0; i--) {
+            if (s.charAt(i) == ' ') {
+                if (len != 0) return len;
+            } else {
+                len++;
+            }
+        }
+        return len;
+    }
 }
+
+//    Valid Parentheses
