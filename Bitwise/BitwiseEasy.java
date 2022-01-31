@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class BitwiseEasy {
     //    Add Binary
     public String addBinary(String a, String b) {
@@ -48,12 +51,124 @@ public class BitwiseEasy {
         }
         return ans;
     }
-//    Counting Bits
-//    Binary Watch
-//    Hamming Distance
-//    Number Complement
-//    Set Mismatch
-//    Binary Number with Alternating Bits
+
+    //    Counting Bit
+    public int[] countBits(int n) {
+        int[] ans = new int[n + 1];
+
+        for (int i = 1; i <= n; i++) {
+            ans[i] = bitCount(i);
+        }
+
+        return ans;
+    }
+
+    public int bitCount(int n) {
+        int cnt = 0;
+        while (n > 0) {
+            cnt += (n & 1);
+            n = n >> 1;
+        }
+
+        return cnt;
+    }
+
+    //using previous ans - optimized
+    public int[] countBitsOptimized(int n) {
+        int[] ans = new int[n + 1];
+
+        for (int i = 1; i <= n; i++) {
+            ans[i] = ans[i >> 1] + (i & 1);
+        }
+
+        return ans;
+    }
+
+    //    Binary Watch
+    public List<String> readBinaryWatch(int num) {
+        ArrayList<String> ans = new ArrayList<>();
+
+        for (int i = 0; i < 12; i++) {
+            for (int j = 0; j < 60; j++) {
+                if (Integer.bitCount(i) + Integer.bitCount(j) == num) {
+
+                    String str = "" + i + ":";
+                    if (j < 10) str += "0";
+                    str += "" + j;
+                    ans.add(str);
+                }
+            }
+        }
+        return ans;
+    }
+
+    //    Hamming Distance
+    public int hammingDistance(int x, int y) {
+        int count = 0;
+        int temp = x ^ y;                  // take the xor of two numbers
+        while (temp != 0) {                // count the no of "1"s
+            if ((temp & 1) == 1)
+                count++;
+            temp = temp >> 1;
+        }
+        return count;
+    }
+
+    //    Number Complement
+
+    //https://leetcode.com/problems/number-complement/discuss/1649516/Java-or-0-ms-or-1-liner-or-Explained
+    public int findComplement(int num) {
+        var nBits = (int) Math.floor((Math.log(num) / Math.log(2)) + 1);
+        var mask = (1 << nBits) - 1;
+        return ~num & mask;
+    }
+
+    public int findComplementOneLiner(int num) {
+        return ~num & (Integer.highestOneBit(num) - 1);
+    }
+
+    //    Set Mismatch
+    public int[] findErrorNums(int[] nums) {
+        cyclicSort(nums);
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != i + 1) {
+                return new int[]{nums[i], i + 1};
+            }
+        }
+        return new int[]{-1, -1};
+    }
+
+    public void cyclicSort(int[] nums) {
+        int i = 0;
+        while (i < nums.length) {
+            if (nums[i] == nums[nums[i] - 1]) {
+                i++;
+            } else {
+                swap(nums, i, nums[i] - 1);
+            }
+        }
+    }
+
+    public void swap(int[] nums, int first, int second) {
+        int temp = nums[first];
+        nums[first] = nums[second];
+        nums[second] = temp;
+    }
+
+    //    Binary Number with Alternating Bits
+    boolean hasAlternatingBits(int n) {
+        /*
+        n =         1 0 1 0 1 0 1 0
+        n >> 1      0 1 0 1 0 1 0 1
+        n ^ n>>1    1 1 1 1 1 1 1 1
+        n           1 1 1 1 1 1 1 1
+        n + 1     1 0 0 0 0 0 0 0 0
+        n & (n+1)   0 0 0 0 0 0 0 0
+        */
+
+        n = n ^ (n >> 1);
+        return (n & n + 1) == 0;
+    }
 //    Prime Number of Set Bits in Binary Representation
 //    Binary Gap
 //    Number of Steps to Reduce a Number to Zero
