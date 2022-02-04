@@ -169,13 +169,59 @@ public class BitwiseEasy {
         n = n ^ (n >> 1);
         return (n & n + 1) == 0;
     }
-//    Prime Number of Set Bits in Binary Representation
-//    Binary Gap
-//    Number of Steps to Reduce a Number to Zero
+
+    //    Prime Number of Set Bits in Binary Representation
+    //    Binary Gap
+    public int binaryGap(int N) {
+        int indexOne = -1, longestDistance = 0;
+        for (int i = 0; i < 32; ++i) { // 32 bit number so 32 iterations, could also use Integer.toBinaryString(N).length() but the time it takes to convert to binary string is longer than just doing extra iterations for numbers smaller than 32 bits in size
+            if (((N >> i) & 1) == 1) { // take the right most bit, use the bitwise 'AND' operator, if result is 1 then bit was a 1
+                if (indexOne != -1) // only the first 1 will not trigger this conditional
+                    longestDistance = Math.max(longestDistance, i - indexOne); // greedy
+                indexOne = i; // update the index of the most recently seen '1'
+            }
+        }
+
+        return longestDistance;
+    }
+
+    //    Number of Steps to Reduce a Number to Zero
+    public int numberOfStepsRecursive(int num) {
+        return helper(num, 0);
+    }
+
+    public int helper(int num, int i) {
+        if (num == 0) return i;
+        if (num % 2 == 0) return helper(num / 2, i + 1);
+        else return helper(num - 1, i + 1);
+    }
+
+    public int numberOfStepsIterative(int num) {
+        int i = 0;
+        while (num != 0) {
+            if (num % 2 == 0) num /= 2;
+            else num -= 1;
+            i++;
+        }
+        return i;
+    }
 //    Sort Integers by The Number of 1 Bits
-//    XOR Operation in an Array
+
+    //    XOR Operation in an Array
+    //Bruteforce
+    public int xorOperation(int n, int start) {
+        int[] nums = new int[n];
+        for (int i = 0; i < n; i++) {
+            nums[i] = start + 2 * i;
+        }
+        int ans = nums[0];
+        for (int i = 1; i < n; i++) {
+            ans ^= nums[i];
+        }
+        return ans;
+    }
 //    Count the Number of Consistent Strings
 //    Decode XORed Array
 //    Sum of All Subset XOR Totals
-//    Longest Nice Substring
+//    The Longest Nice Substring
 }
