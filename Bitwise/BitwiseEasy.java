@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class BitwiseEasy {
     //    Add Binary
@@ -222,6 +221,23 @@ public class BitwiseEasy {
     }
 
     //    Count the Number of Consistent Strings
+    public int countConsistentStrings(String allowed, String[] words) {
+        int ans = words.length;
+        boolean[] alpha = new boolean[123];
+        for (int i = 0; i < allowed.length(); i++) {
+            alpha[allowed.charAt(i)] = true;
+        }
+        for (String word : words) {
+            for (int i = 0; i < word.length(); i++) {
+                if (!alpha[word.charAt(i)]) {
+                    ans--;
+                    break;
+                }
+            }
+        }
+        return ans;
+    }
+
     //    Decode XORed Array
     public int[] decode(int[] encoded, int first) {
         int[] ans = new int[encoded.length + 1];
@@ -231,6 +247,59 @@ public class BitwiseEasy {
         }
         return ans;
     }
-//    Sum of All Subset XOR Totals
-//    The Longest Nice Substring
+
+    //    Sum of All Subset XOR Totals
+    //Easy to understand
+    public static int subsetXORSum(int[] nums) {
+        List<Integer> list = new ArrayList<>();
+        helper(nums, 0, new Stack<>(), list);
+        int sum = 0;
+        for (int i : list) {
+            sum += i;
+        }
+        return sum;
+    }
+
+    public static void helper(int[] nums, int i, Stack<Integer> s, List<Integer> list) {
+        if (i == nums.length) {
+            int res = 0;
+            for (Integer x : s) {
+                res ^= x;
+            }
+            list.add(res);
+            return;
+        }
+        helper(nums, i + 1, s, list);
+        s.push(nums[i]);
+        helper(nums, i + 1, s, list);
+        s.pop();
+    }
+
+    //fast solution as stack and list is removed
+    public int subsetXORSum2(int[] nums) {
+        return helper(nums, 0, 0);
+    }
+
+    public int helper(int[] nums, int i, int cur) {
+        if (i == nums.length) {
+            return cur;
+        }
+        return (helper(nums, i + 1, cur ^ nums[i]) + helper(nums, i + 1, cur));
+    }
+
+    //    The Longest Nice Substring
+    public String longestNiceSubstring(String s) {
+        if (s.length() < 2) return "";
+        char[] arr = s.toCharArray();
+        Set<Character> set = new HashSet<>();
+        for (char c : arr) set.add(c);
+        for (int i = 0; i < arr.length; i++) {
+            char c = arr[i];
+            if (set.contains(Character.toUpperCase(c)) && set.contains(Character.toLowerCase(c))) continue;
+            String sub1 = longestNiceSubstring(s.substring(0, i));
+            String sub2 = longestNiceSubstring(s.substring(i + 1));
+            return sub1.length() >= sub2.length() ? sub1 : sub2;
+        }
+        return s;
+    }
 }
