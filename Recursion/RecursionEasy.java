@@ -1,8 +1,145 @@
-import java.util.Arrays;
+import java.util.*;
 
 public class RecursionEasy {
     public static void main(String[] args) {
-        System.out.println(Character.MIN_VALUE);
+        System.out.println(powerSetLex("abc"));
+    }
+
+    static void backtracking(int[] arr, int n) {
+        if (arr[n] == 3) {
+            return;
+        }
+        if (n == 0) {
+            return;
+        }
+        int x = arr[n];
+        arr[n] = 0;
+        System.out.println(Arrays.toString(arr));
+        backtracking(arr, n - 1);
+        arr[n] = x;
+        backtracking(arr, n - 1);
+        arr[n] = x;
+        System.out.println(Arrays.toString(arr));
+    }
+
+    static void maze(int r, int c, String ans) {
+        if (r == 1 && c == 1) {
+            System.out.println(ans);
+            return;
+        }
+        if (r > 1) {
+            maze(r - 1, c, ans + "R");
+        }
+        if (c > 1) {
+            maze(r, c - 1, ans + "D");
+        }
+    }
+
+    static void mazeWithObstacles(int[][] arr, int r, int c, String ans) {
+        if (arr[r][c] == 1) {
+            return;
+        }
+        if (r == 0 && c == 0) {
+            System.out.println(ans);
+            return;
+        }
+        if (r > 0) {
+            mazeWithObstacles(arr, r - 1, c, ans + "R");
+        }
+        if (c > 0) {
+            mazeWithObstacles(arr, r, c - 1, ans + "D");
+        }
+    }
+
+    static ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
+
+    /**
+     * dice sum
+     **/
+    static ArrayList<Integer> diceSum(ArrayList<Integer> p, int up) {
+        if (up == 0) {
+            return new ArrayList<>(p);
+        }
+        ArrayList<Integer> list = new ArrayList<>();
+        for (int i = 1; i <= 6; i++) {
+            if (up - i < 0) {
+                break;
+            }
+            p.add(i);
+            list.addAll(diceSum(p, up - i));
+            p.clear();
+        }
+        return list;
+    }
+
+    static List<String> letterCombinations(String up) {
+        return letterCombination("", up);
+    }
+
+    //letter combination
+    static final HashMap<Character, String> digitLetterMap = new HashMap<>(Map.of(
+            '2', "abc",
+            '3', "def",
+            '4', "ghi",
+            '5', "jkl",
+            '6', "mno",
+            '7', "pqrs",
+            '8', "tuv",
+            '9', "wxyz"
+    ));
+
+    static List<String> letterCombination(String p, String up) {
+        if (up.isEmpty()) {
+            ArrayList<String> list = new ArrayList<>();
+            list.add(p);
+            return list;
+        }
+        ArrayList<String> ans = new ArrayList<>();
+        char number = up.charAt(0);
+        String letters = digitLetterMap.get(number);
+        for (int i = 0; i < letters.length(); i++) {
+            ans.addAll(letterCombination(p + letters.charAt(i), up.substring(1)));
+        }
+        return ans;
+    }
+
+    //subsets of a given string
+    static void powerSetString(String p, String up) {
+        if (p.isEmpty()) {
+            System.out.println(p);
+            return;
+        }
+        char ch = up.charAt(0);
+        powerSetString(p, up.substring(1));
+        powerSetString(p + ch, up.substring(1));
+    }
+
+    //permutations of a string
+    static void permutation(String p, String up) {
+        if (up.isEmpty()) {
+            System.out.println(p);
+            return;
+        }
+        char ch = up.charAt(0);
+        for (int i = 0; i <= p.length(); i++) {
+            String f = p.substring(0, i);
+            String s = p.substring(i);
+            permutation(f + ch + s, up.substring(1));
+        }
+    }
+
+    static int permutationCount(String p, String up) {
+        if (up.isEmpty()) {
+            return 1;
+        }
+        int ans = 0;
+        char ch = up.charAt(0);
+        for (int i = 0; i <= p.length(); i++) {
+            String f = p.substring(0, i);
+            String s = p.substring(i);
+            ans += permutationCount(f + ch + s, up.substring(1));
+        }
+        return ans;
     }
 
     //    Sum Triangle from Array GFG
@@ -217,12 +354,162 @@ public class RecursionEasy {
         if (num % 2 == 0) return helper(num / 2, i + 1);
         else return helper(num - 1, i + 1);
     }
-//    Check for balanced paranthesis using recursion without stack. GFG
 
+    //    Check for balanced parenthesis using recursion without stack. GFG
+
+    static boolean ispar(String x) {
+        // add your code here
+        return check(x.toCharArray(), x.length());
+    }
+
+    // copied
+    static char findClosing(char c) {
+        if (c == '(')
+            return ')';
+        if (c == '{')
+            return '}';
+        if (c == '[')
+            return ']';
+        return Character.MIN_VALUE;
+    }
+
+    // function to check if parenthesis are
+    // balanced.
+    static boolean check(char expr[], int n) {
+        // Base cases
+        if (n == 0)
+            return true;
+        if (n == 1)
+            return false;
+        if (expr[0] == ')' || expr[0] == '}' || expr[0] == ']')
+            return false;
+
+        // Search for closing bracket for first
+        // opening bracket.
+        char closing = findClosing(expr[0]);
+
+        // count is used to handle cases like
+        // "((()))". We basically need to
+        // consider matching closing bracket.
+        int i, count = 0;
+        for (i = 1; i < n; i++) {
+            if (expr[i] == expr[0])
+                count++;
+            if (expr[i] == closing) {
+                if (count == 0)
+                    break;
+                count--;
+            }
+        }
+
+        // If we did not find a closing
+        // bracket
+        if (i == n)
+            return false;
+
+        // If closing bracket was next
+        // to open
+        if (i == 1)
+            return check(Arrays.copyOfRange(expr, i + 1, n), n - 2);
+        // If closing bracket was somewhere
+        // in middle.
+        return check(Arrays.copyOfRange(expr, 1, n), i - 1) && check(Arrays.copyOfRange(expr, (i + 1), n), n - i - 1);
+    }
 //    Remove consecutive duplicate characters from a string. GFG
 
-//    Print all possible palindromic partitions of a string. GFG
+    static String removeConsecutiveDuplicates(String p, String up) {
+        if (up.isEmpty()) {
+            return p;
+        }
+        char ch = up.charAt(0);
+        if (!p.isEmpty()) {
+            if (ch == p.charAt(p.length() - 1)) {
+                return removeConsecutiveDuplicates(p, up.substring(1));
+            }
+        }
+        return removeConsecutiveDuplicates(p + ch, up.substring(1));
+    }
+
+    //    Print all possible palindromic partitions of a string. GFG
+    // copied
+    static ArrayList<ArrayList<String>> allPalindromicPerms(String S) {
+        // code here
+        int n = S.length();
+
+        // To Store all palindromic partitions
+        ArrayList<ArrayList<String>> allPart = new ArrayList<>();
+
+        // To store current palindromic partition
+        Deque<String> currPart = new LinkedList<String>();
+
+        // Call recursive function to generate
+        // all partitions and store in allPart
+        allPalPartitonsUtil(allPart, currPart, 0, n, S);
+        return allPart;
+    }
+
+
+    // Recursive function to find all palindromic
+    // partitions of input[start..n-1] allPart --> A
+    // ArrayList of Deque of strings. Every Deque
+    // inside it stores a partition currPart --> A
+    // Deque of strings to store current partition
+    private static void allPalPartitonsUtil(ArrayList<ArrayList<String>> allPart,
+                                            Deque<String> currPart, int start, int n, String input) {
+        // If 'start' has reached len
+        if (start >= n) {
+            allPart.add(new ArrayList<>(currPart));
+            return;
+        }
+
+        // Pick all possible ending points for substrings
+        for (int i = start; i < n; i++) {
+
+            // If substring str[start..i] is palindrome
+            if (isPalindrome(input, start, i)) {
+
+                // Add the substring to result
+                currPart.addLast(input.substring(start, i + 1));
+
+                // Recur for remaining remaining substring
+                allPalPartitonsUtil(allPart, currPart, i + 1, n, input);
+
+                // Remove substring str[start..i] from current
+                // partition
+                currPart.removeLast();
+            }
+        }
+    }
+
+    // A utility function to check
+    // if input is Palindrome
+    private static boolean isPalindrome(String input,
+                                        int start, int i) {
+        while (start < i) {
+            if (input.charAt(start++) != input.charAt(i--))
+                return false;
+        }
+        return true;
+    }
 
 //    Power Set of permutations of a string in Lexicographic order. GFG
 
+    static ArrayList<String> powerSetLex(String s){
+        ArrayList<String> ans = new ArrayList<>(powerSet("", s));
+        Collections.sort(ans);
+        return ans;
+    }
+    static ArrayList<String> powerSet(String p, String up){
+        if(up.isEmpty()){
+            ArrayList<String> list = new ArrayList<>();
+            list.add(p);
+            return list;
+        }
+        ArrayList<String> ans = new ArrayList<>();
+        char ch = up.charAt(0);
+        ans.addAll(powerSet(p, up.substring(1)));
+        ans.addAll(powerSet(p+ch, up.substring(1)));
+
+        return ans;
+    }
 }
