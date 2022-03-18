@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class SortingEasy {
     public static void main(String[] args) {
@@ -411,6 +409,21 @@ public class SortingEasy {
     }
 
     //    Rank Transform of an Array
+    public int[] arrayRankTransform(int[] arr) {
+
+        int[] arrCopy = arr.clone();
+        Arrays.sort(arrCopy);
+        Map<Integer, Integer> map = new HashMap<>();
+
+
+        for(int i: arrCopy){
+            map.putIfAbsent(i, map.size()+1);
+        }
+        for(int i=0;i<arr.length;i++){
+            arrCopy[i] = map.get(arr[i]);
+        }
+        return arrCopy;
+    }
 //    Sort Integers by The Number of 1 Bits
 //    How Many Numbers Are Smaller Than the Current Number
 //    Maximum Product of Two Elements in an Array
